@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ambient\Ambient.Backend\Ambient.Backend.csproj" />
+    <ProjectReference Include="..\Ambient\Ambient.Frontend.WindowsHybrid\Ambient.Frontend.WindowsHybrid.csproj" />
+  </ItemGroup>
+
+</Project>

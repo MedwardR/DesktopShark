@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="../Ambient/Ambient.Backend/Ambient.Backend.csproj" />
+  <Project Path="../Ambient/Ambient.Frontend.WindowsHybrid/Ambient.Frontend.WindowsHybrid.csproj" />
+  <Project Path="DesktopShark.csproj" />
+</Solution>
