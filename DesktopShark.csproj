@@ -13,4 +13,10 @@
     <ProjectReference Include="..\Ambient\Ambient.Frontend.WindowsHybrid\Ambient.Frontend.WindowsHybrid.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\shark.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

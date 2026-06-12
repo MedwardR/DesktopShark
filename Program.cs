@@ -1,4 +1,6 @@
+using Ambient.Backend.IO;
 using Ambient.Frontend.WindowsHybrid.Application;
+using Ambient.Frontend.WindowsHybrid.Utilities;
 
 namespace DesktopShark;
 
@@ -10,9 +12,15 @@ internal static class Program
 		ApplicationConfiguration.Initialize();
 
 		var app = new AmbientApplication();
-		var shark = new Shark();
+		var asys = new AssetSystem()
+		{
+			AssetsRoot = "Assets/",
+		};
+		var shark = new Shark(asys);
+		shark.Transform.Position = ScreenInformation.GetMousePosition();
 
-		app.World.AddNode(shark);
+		app.World.Nodes.Add(asys);
+		app.World.Nodes.Add(shark);
 		app.Run();
 	}
 }
