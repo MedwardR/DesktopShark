@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using Ambient.Backend.Diagnostics;
 using Ambient.Backend.IO;
 using Ambient.Frontend.WindowsHybrid.Application;
 using Ambient.Frontend.WindowsHybrid.Utilities;
@@ -9,18 +11,21 @@ internal static class Program
 	[STAThread]
 	public static void Main()
 	{
-		ApplicationConfiguration.Initialize();
-
 		var app = new AmbientApplication();
-		var asys = new AssetSystem()
+
+		var assets = new AssetSystem()
 		{
 			AssetsRoot = "Assets/",
 		};
-		var shark = new Shark(asys);
+		var shark = new Shark(assets);
 		shark.Transform.Position = ScreenInformation.GetMousePosition();
 
-		app.World.Nodes.Add(asys);
+		var monitor = FrameRateMonitor.StartNew(1.0);
+		monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
+
 		app.World.Nodes.Add(shark);
+		app.World.Nodes.Add(monitor);
+
 		app.Run();
 	}
 }
