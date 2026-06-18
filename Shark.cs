@@ -33,10 +33,10 @@ internal class Shark : Node, ITransformable
 		}
 		Animator = new(frames);
 
-		Animator.FrameChanged += (s, e) => Graphics.Image.Source = e.Frame.Value.Source;
+		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
 
-		MoveSpeed = 0f;
+		MoveSpeed = 50f;
 		Nodes.Add(Animator);
 	}
 

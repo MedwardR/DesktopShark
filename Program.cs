@@ -11,6 +11,9 @@ internal static class Program
 	[STAThread]
 	public static void Main()
 	{
+		Application.EnableVisualStyles();
+		ApplicationConfiguration.Initialize();
+
 		var app = new AmbientApplication();
 
 		var assets = new AssetSystem()
