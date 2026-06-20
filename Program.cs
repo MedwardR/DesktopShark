@@ -1,6 +1,6 @@
 using System.Diagnostics;
+using Ambient.Backend.Assets;
 using Ambient.Backend.Diagnostics;
-using Ambient.Backend.IO;
 using Ambient.Frontend.WindowsHybrid.Application;
 using Ambient.Frontend.WindowsHybrid.Utilities;
 

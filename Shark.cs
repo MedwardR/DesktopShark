@@ -1,11 +1,13 @@
 ﻿using Ambient.Backend.Animation;
+using Ambient.Backend.Assets;
 using Ambient.Backend.Contracts;
 using Ambient.Backend.Extensions;
 using Ambient.Backend.Geometry;
-using Ambient.Backend.IO;
 using Ambient.Backend.Kernel;
+using Ambient.Frontend.WindowsHybrid.Extensions;
 using Ambient.Frontend.WindowsHybrid.Graphics;
 using Ambient.Frontend.WindowsHybrid.Utilities;
+using Ambient.Frontend.WindowsHybrid.Visuals;
 
 namespace DesktopShark;
 
@@ -19,13 +21,15 @@ internal class Shark : Node, ITransformable
 
 	public Shark(AssetSystem assets)
 	{
+		var template = new SpriteAnimationTemplate(256, 200, 0.2f);
+
 		Transform = new();
 		Graphics = new(Transform);
 
 		Animator = new()
 		{
-			{ "idle", LoadAnimation(assets, "shark_idle.png") },
-			{ "swim", LoadAnimation(assets, "shark_swim.png") },
+			{ "idle", assets.LoadAsset<Sprite>("shark_idle.png").Animate(template) },
+			{ "swim", assets.LoadAsset<Sprite>("shark_swim.png").Animate(template) },
 		};
 		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
@@ -47,19 +51,5 @@ internal class Shark : Node, ITransformable
 			Transform.FlipY = cursor.X < Transform.Position.X;
 		}
 		else Animator.Use("idle");
-	}
-
-	private static KeyFrame<Sprite>[] LoadAnimation(AssetSystem assets, string path)
-	{
-		var png = assets.LoadAsset<Sprite>(path);
-		var spritesheet = png.Split(256, 200);
-		var frames = new KeyFrame<Sprite>[spritesheet.Length];
-
-		for (int index = 0; index < spritesheet.Length; index++)
-		{
-			var sprite = spritesheet[index];
-			frames[index] = new(sprite, 0.2f);
-		}
-		return frames;
 	}
 }
