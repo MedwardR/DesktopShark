@@ -22,17 +22,11 @@ internal class Shark : Node, ITransformable
 		Transform = new();
 		Graphics = new(Transform);
 
-		var png = assets.LoadAsset<Sprite>("shark_swim_spritesheet.png");
-		var spritesheet = png.Split(256, 200);
-		var frames = new KeyFrame<Sprite>[spritesheet.Length];
-
-		for (int index = 0; index < spritesheet.Length; index++)
+		Animator = new()
 		{
-			var sprite = spritesheet[index];
-			frames[index] = new(sprite, 0.2f);
-		}
-		Animator = new(frames);
-
+			{ "idle", LoadAnimation(assets, "shark_idle.png") },
+			{ "swim", LoadAnimation(assets, "shark_swim.png") },
+		};
 		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
 
@@ -49,7 +43,23 @@ internal class Shark : Node, ITransformable
 
 		if (Transform.Position != cursor)
 		{
+			Animator.Use("swim");
 			Transform.FlipY = cursor.X < Transform.Position.X;
 		}
+		else Animator.Use("idle");
+	}
+
+	private static KeyFrame<Sprite>[] LoadAnimation(AssetSystem assets, string path)
+	{
+		var png = assets.LoadAsset<Sprite>(path);
+		var spritesheet = png.Split(256, 200);
+		var frames = new KeyFrame<Sprite>[spritesheet.Length];
+
+		for (int index = 0; index < spritesheet.Length; index++)
+		{
+			var sprite = spritesheet[index];
+			frames[index] = new(sprite, 0.2f);
+		}
+		return frames;
 	}
 }

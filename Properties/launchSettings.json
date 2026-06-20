@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Development": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DEBUG": "TRUE"
+      }
+    },
+    "Production": {
+      "commandName": "Project"
+    }
+  }
+}
