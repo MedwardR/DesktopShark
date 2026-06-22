@@ -1,4 +1,5 @@
-﻿using Ambient.Backend.Animation;
+﻿using System.Diagnostics;
+using Ambient.Backend.Animation;
 using Ambient.Backend.Assets;
 using Ambient.Backend.Contracts;
 using Ambient.Backend.Extensions;
@@ -34,7 +35,7 @@ internal class Shark : Node, ITransformable
 		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
 
-		MoveSpeed = 50f;
+		MoveSpeed = 100f;
 		Nodes.Add(Animator);
 	}
 
@@ -42,13 +43,17 @@ internal class Shark : Node, ITransformable
 	{
 		var cursor = ScreenInformation.GetMousePosition();
 
-		Transformable.MoveTowards(this, cursor, MoveSpeed * deltaTime);
-		Transformable.PointTowards(this, cursor);
+		var difference = cursor - Transform.Position;
+		float distance = MoveSpeed * deltaTime;
 
-		if (Transform.Position != cursor)
+		if (difference.Length() >= distance * 10)
 		{
-			Animator.Use("swim");
+			Transformable.MoveTowards(this, cursor, distance);
+			Transformable.PointTowards(this, cursor);
+
 			Transform.FlipY = cursor.X < Transform.Position.X;
+
+			Animator.Use("swim");
 		}
 		else Animator.Use("idle");
 	}

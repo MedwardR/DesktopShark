@@ -24,7 +24,7 @@ internal static class Program
 		shark.Transform.Position = ScreenInformation.GetMousePosition();
 
 		var monitor = FrameRateMonitor.StartNew(1.0);
-		monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
+		//monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
 
 		app.World.Nodes.Add(shark);
 		app.World.Nodes.Add(monitor);
