@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Ambient.Backend.Animation;
+﻿using Ambient.Backend.Animation;
 using Ambient.Backend.Assets;
 using Ambient.Backend.Contracts;
 using Ambient.Backend.Extensions;

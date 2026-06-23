@@ -14,9 +14,13 @@ internal static class Program
 		Application.EnableVisualStyles();
 		ApplicationConfiguration.Initialize();
 
-		var app = new AmbientApplication();
-
-		var assets = new AssetSystem()
+		var app = new AmbientApplication
+		{
+			Name = "Desktop Shark",
+			Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath),
+			FormFactory = new FormFactory<ManagerForm>(),
+		};
+		var assets = new AssetSystem
 		{
 			AssetsRoot = "Assets/",
 		};
@@ -24,7 +28,7 @@ internal static class Program
 		shark.Transform.Position = ScreenInformation.GetMousePosition();
 
 		var monitor = FrameRateMonitor.StartNew(1.0);
-		//monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
+		monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
 
 		app.World.Nodes.Add(shark);
 		app.World.Nodes.Add(monitor);
