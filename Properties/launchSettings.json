@@ -1,12 +1,6 @@
 {
   "profiles": {
-    "Development": {
-      "commandName": "Project",
-      "environmentVariables": {
-        "DEBUG": "TRUE"
-      }
-    },
-    "Production": {
+    "DesktopShark": {
       "commandName": "Project"
     }
   }

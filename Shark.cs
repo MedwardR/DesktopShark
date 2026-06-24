@@ -1,20 +1,14 @@
 ﻿using Ambient.Backend.Animation;
 using Ambient.Backend.Assets;
-using Ambient.Backend.Contracts;
 using Ambient.Backend.Extensions;
-using Ambient.Backend.Geometry;
-using Ambient.Backend.Kernel;
 using Ambient.Frontend.WindowsHybrid.Extensions;
 using Ambient.Frontend.WindowsHybrid.Graphics;
 using Ambient.Frontend.WindowsHybrid.Utilities;
-using Ambient.Frontend.WindowsHybrid.Visuals;
 
 namespace DesktopShark;
 
-internal class Shark : Node, ITransformable
+internal class Shark : Visual<RasterGraphic>
 {
-	public LinearTransform Transform { get; }
-	public RasterGraphic Graphics { get; }
 	public Animator<Sprite> Animator { get; }
 
 	public float MoveSpeed { get; set; }
@@ -23,13 +17,10 @@ internal class Shark : Node, ITransformable
 	{
 		var template = new SpriteAnimationTemplate(256, 200, 0.2f);
 
-		Transform = new();
-		Graphics = new(Transform);
-
 		Animator = new()
 		{
-			{ "idle", assets.LoadAsset<Sprite>("shark_idle.png").Animate(template) },
-			{ "swim", assets.LoadAsset<Sprite>("shark_swim.png").Animate(template) },
+			{ "idle", assets.Load<Sprite>("shark_idle.png").Animate(template) },
+			{ "swim", assets.Load<Sprite>("shark_swim.png").Animate(template) },
 		};
 		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
