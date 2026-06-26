@@ -1,20 +1,17 @@
-﻿using Ambient.Backend.Assets;
-using Ambient.Frontend.WindowsHybrid.Application;
+﻿using Ambient.Frontend.WindowsHybrid.Application;
+using Ambient.Frontend.WindowsHybrid.Assets;
 using Ambient.Frontend.WindowsHybrid.Extensions;
-using Ambient.Frontend.WindowsHybrid.Graphics;
 
 namespace DesktopShark;
 
 public partial class MainForm : Form
 {
 	protected readonly AmbientApplication _application;
-	protected readonly AssetSystem _assets;
 	protected readonly FontSystem _fonts;
 
-	public MainForm(AmbientApplication app, AssetSystem assets, FontSystem fonts)
+	public MainForm(AmbientApplication app, FontSystem fonts)
 	{
 		_application = app;
-		_assets = assets;
 		_fonts = fonts;
 
 		InitializeComponent();

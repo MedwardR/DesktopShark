@@ -1,6 +1,7 @@
 ﻿using Ambient.Backend.Animation;
 using Ambient.Backend.Assets;
 using Ambient.Backend.Extensions;
+using Ambient.Frontend.WindowsHybrid.Assets;
 using Ambient.Frontend.WindowsHybrid.Extensions;
 using Ambient.Frontend.WindowsHybrid.Graphics;
 using Ambient.Frontend.WindowsHybrid.Utilities;

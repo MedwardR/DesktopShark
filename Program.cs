@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Ambient.Backend.Assets;
 using Ambient.Backend.Diagnostics;
 using Ambient.Frontend.WindowsHybrid.Application;
-using Ambient.Frontend.WindowsHybrid.Graphics;
+using Ambient.Frontend.WindowsHybrid.Assets;
 using Ambient.Frontend.WindowsHybrid.Utilities;
 
 namespace DesktopShark;
@@ -14,18 +14,10 @@ internal static class Program
 	{
 		Application.EnableVisualStyles();
 		Application.SetCompatibleTextRenderingDefault(false);
-
 		ApplicationConfiguration.Initialize();
 
-		var app = new AmbientApplication
-		{
-			Name = "Desktop Shark",
-			Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath),
-		};
-		var assets = new AssetSystem
-		{
-			AssetsRoot = "Assets/",
-		};
+		var app = new AmbientApplication("Desktop Shark");
+		var assets = new AssetSystem("Assets");
 		var fonts = new FontSystem(assets);
 
 		var shark = new Shark(assets);
@@ -36,7 +28,7 @@ internal static class Program
 
 		app.FormFactory = new(() =>
 		{
-			return new MainForm(app, assets, fonts);
+			return new MainForm(app, fonts);
 		});
 
 		app.World.Nodes.Add(shark);
