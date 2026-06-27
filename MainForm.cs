@@ -1,48 +1,47 @@
-﻿using Ambient.Frontend.WindowsHybrid.Application;
+﻿using Ambient.Backend.Kernel;
+using Ambient.Frontend.WindowsHybrid.Application;
 using Ambient.Frontend.WindowsHybrid.Assets;
-using Ambient.Frontend.WindowsHybrid.Extensions;
 
 namespace DesktopShark;
 
 public partial class MainForm : Form
 {
 	protected readonly AmbientApplication _application;
+	protected readonly World _world;
 	protected readonly FontSystem _fonts;
 
 	public MainForm(AmbientApplication app, FontSystem fonts)
 	{
+		InitializeComponent();
+
 		_application = app;
+		_world = app.World;
 		_fonts = fonts;
 
-		InitializeComponent();
-		InitializeTypeface();
+		FramesPerSecond.Value = (decimal)_world.FramesPerSecond;
 	}
 
-	private void InitializeTypeface()
+	private void MainForm_Load(object sender, EventArgs e)
 	{
-		var fonts = new Dictionary<string, FontFamily>
-		{
-			{ "Disgusting Behavior", _fonts.Load("disgusting_behavior.ttf") },
-		};
-		var controls = Ancestry.Collect(this);
+		_fonts.Load("disgusting_behavior.ttf");
+		_fonts.Load("aquifer.ttf");
 
-		foreach (var c in controls)
-		{
-			var f = c.Font;
+		_fonts.ApplyTo(this);
+	}
 
-			if (!string.IsNullOrWhiteSpace(f.OriginalFontName))
-			{
-				if (fonts.TryGetValue(f.OriginalFontName, out var family))
-				{
-					float emSize = f.Size;
-					var style = f.Style;
-					var unit = f.Unit;
-					byte gdiCharSet = f.GdiCharSet;
-					bool gdiVerticalFont = f.GdiVerticalFont;
+	private void ApplyButton_Click(object sender, EventArgs e)
+	{
+		Save();
+	}
 
-					c.Font = new(family, emSize, style, unit, gdiCharSet, gdiVerticalFont);
-				}
-			}
-		}
+	private void OkButton_Click(object sender, EventArgs e)
+	{
+		Save();
+		Close();
+	}
+
+	private void Save()
+	{
+		_world.FramesPerSecond = (double)FramesPerSecond.Value;
 	}
 }

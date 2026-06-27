@@ -31,67 +31,215 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			label1 = new Label();
 			tableLayoutPanel1 = new TableLayoutPanel();
-			checkBox1 = new CheckBox();
+			AlwaysOnTop = new CheckBox();
+			FollowCursor = new CheckBox();
+			EnableCursorChomping = new CheckBox();
+			label3 = new Label();
+			MoveSpeed = new NumericUpDown();
+			label2 = new Label();
+			MoveInterval = new NumericUpDown();
+			label4 = new Label();
+			FramesPerSecond = new NumericUpDown();
+			ApplyButton = new Button();
+			OkButton = new Button();
 			tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)MoveSpeed).BeginInit();
+			((System.ComponentModel.ISupportInitialize)MoveInterval).BeginInit();
+			((System.ComponentModel.ISupportInitialize)FramesPerSecond).BeginInit();
 			SuspendLayout();
 			// 
 			// label1
 			// 
-			label1.Anchor = AnchorStyles.Top;
+			label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			label1.AutoEllipsis = true;
-			label1.AutoSize = true;
-			label1.Font = new Font("Disgusting Behavior", 36F);
-			label1.Location = new Point(21, 4);
-			label1.Margin = new Padding(4, 4, 4, 4);
+			label1.Font = new Font("Disgusting Behavior", 40F);
+			label1.Location = new Point(18, 20);
+			label1.Margin = new Padding(3);
 			label1.Name = "label1";
-			label1.Size = new Size(254, 69);
+			label1.Size = new Size(287, 77);
 			label1.TabIndex = 2;
 			label1.Text = "Shark Settings";
+			label1.TextAlign = ContentAlignment.TopCenter;
 			// 
 			// tableLayoutPanel1
 			// 
-			tableLayoutPanel1.ColumnCount = 1;
-			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-			tableLayoutPanel1.Controls.Add(label1, 0, 0);
-			tableLayoutPanel1.Controls.Add(checkBox1, 0, 1);
-			tableLayoutPanel1.Dock = DockStyle.Fill;
-			tableLayoutPanel1.Location = new Point(15, 17);
-			tableLayoutPanel1.Margin = new Padding(4, 4, 4, 4);
+			tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			tableLayoutPanel1.ColumnCount = 2;
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+			tableLayoutPanel1.Controls.Add(AlwaysOnTop, 0, 0);
+			tableLayoutPanel1.Controls.Add(FollowCursor, 1, 0);
+			tableLayoutPanel1.Controls.Add(EnableCursorChomping, 0, 1);
+			tableLayoutPanel1.Controls.Add(label3, 1, 2);
+			tableLayoutPanel1.Controls.Add(MoveSpeed, 1, 3);
+			tableLayoutPanel1.Controls.Add(label2, 0, 2);
+			tableLayoutPanel1.Controls.Add(MoveInterval, 0, 3);
+			tableLayoutPanel1.Controls.Add(label4, 0, 4);
+			tableLayoutPanel1.Controls.Add(FramesPerSecond, 0, 5);
+			tableLayoutPanel1.Location = new Point(27, 103);
+			tableLayoutPanel1.Margin = new Padding(12, 3, 12, 3);
 			tableLayoutPanel1.Name = "tableLayoutPanel1";
-			tableLayoutPanel1.RowCount = 3;
+			tableLayoutPanel1.RowCount = 6;
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
 			tableLayoutPanel1.RowStyles.Add(new RowStyle());
-			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-			tableLayoutPanel1.Size = new Size(296, 357);
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
+			tableLayoutPanel1.RowStyles.Add(new RowStyle());
+			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+			tableLayoutPanel1.Size = new Size(269, 222);
 			tableLayoutPanel1.TabIndex = 3;
 			// 
-			// checkBox1
+			// AlwaysOnTop
 			// 
-			checkBox1.AutoSize = true;
-			checkBox1.Location = new Point(4, 81);
-			checkBox1.Margin = new Padding(4, 4, 4, 4);
-			checkBox1.Name = "checkBox1";
-			checkBox1.Size = new Size(127, 25);
-			checkBox1.TabIndex = 3;
-			checkBox1.Text = "Always on top";
-			checkBox1.UseVisualStyleBackColor = true;
+			AlwaysOnTop.AutoEllipsis = true;
+			AlwaysOnTop.AutoSize = true;
+			AlwaysOnTop.Font = new Font("Segoe UI", 12F);
+			AlwaysOnTop.Location = new Point(3, 3);
+			AlwaysOnTop.Name = "AlwaysOnTop";
+			AlwaysOnTop.Size = new Size(127, 25);
+			AlwaysOnTop.TabIndex = 3;
+			AlwaysOnTop.Text = "Always on top";
+			AlwaysOnTop.UseVisualStyleBackColor = true;
+			// 
+			// FollowCursor
+			// 
+			FollowCursor.AutoEllipsis = true;
+			FollowCursor.AutoSize = true;
+			FollowCursor.Font = new Font("Segoe UI", 12F);
+			FollowCursor.Location = new Point(137, 3);
+			FollowCursor.Name = "FollowCursor";
+			FollowCursor.Size = new Size(123, 25);
+			FollowCursor.TabIndex = 4;
+			FollowCursor.Text = "Follow cursor";
+			FollowCursor.UseVisualStyleBackColor = true;
+			// 
+			// EnableCursorChomping
+			// 
+			EnableCursorChomping.AutoEllipsis = true;
+			EnableCursorChomping.AutoSize = true;
+			tableLayoutPanel1.SetColumnSpan(EnableCursorChomping, 2);
+			EnableCursorChomping.Font = new Font("Segoe UI", 12F);
+			EnableCursorChomping.Location = new Point(3, 43);
+			EnableCursorChomping.Name = "EnableCursorChomping";
+			EnableCursorChomping.Size = new Size(197, 25);
+			EnableCursorChomping.TabIndex = 5;
+			EnableCursorChomping.Text = "Enable cursor chomping";
+			EnableCursorChomping.UseVisualStyleBackColor = true;
+			// 
+			// label3
+			// 
+			label3.AutoSize = true;
+			label3.Font = new Font("Segoe UI", 12F);
+			label3.Location = new Point(137, 83);
+			label3.Margin = new Padding(3);
+			label3.Name = "label3";
+			label3.Size = new Size(94, 21);
+			label3.TabIndex = 7;
+			label3.Text = "Move speed";
+			// 
+			// MoveSpeed
+			// 
+			MoveSpeed.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			MoveSpeed.Font = new Font("Aquifer", 12F);
+			MoveSpeed.Location = new Point(137, 110);
+			MoveSpeed.Name = "MoveSpeed";
+			MoveSpeed.Size = new Size(129, 27);
+			MoveSpeed.TabIndex = 8;
+			// 
+			// label2
+			// 
+			label2.AutoSize = true;
+			label2.Font = new Font("Segoe UI", 12F);
+			label2.Location = new Point(3, 83);
+			label2.Margin = new Padding(3);
+			label2.Name = "label2";
+			label2.Size = new Size(105, 21);
+			label2.TabIndex = 6;
+			label2.Text = "Move interval";
+			// 
+			// MoveInterval
+			// 
+			MoveInterval.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			MoveInterval.Font = new Font("Aquifer", 12F);
+			MoveInterval.Location = new Point(3, 110);
+			MoveInterval.Name = "MoveInterval";
+			MoveInterval.Size = new Size(128, 27);
+			MoveInterval.TabIndex = 9;
+			// 
+			// label4
+			// 
+			label4.AutoSize = true;
+			label4.Font = new Font("Segoe UI", 12F);
+			label4.Location = new Point(3, 150);
+			label4.Margin = new Padding(3);
+			label4.Name = "label4";
+			label4.Size = new Size(36, 21);
+			label4.TabIndex = 10;
+			label4.Text = "FPS";
+			// 
+			// FramesPerSecond
+			// 
+			FramesPerSecond.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			FramesPerSecond.Font = new Font("Aquifer", 12F);
+			FramesPerSecond.Location = new Point(3, 177);
+			FramesPerSecond.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+			FramesPerSecond.Name = "FramesPerSecond";
+			FramesPerSecond.Size = new Size(128, 27);
+			FramesPerSecond.TabIndex = 11;
+			// 
+			// ApplyButton
+			// 
+			ApplyButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			ApplyButton.BackColor = Color.Black;
+			ApplyButton.FlatStyle = FlatStyle.Flat;
+			ApplyButton.Font = new Font("Segoe UI", 14F);
+			ApplyButton.Location = new Point(155, 331);
+			ApplyButton.Name = "ApplyButton";
+			ApplyButton.Size = new Size(82, 40);
+			ApplyButton.TabIndex = 12;
+			ApplyButton.Text = "Apply";
+			ApplyButton.UseVisualStyleBackColor = false;
+			ApplyButton.Click += ApplyButton_Click;
+			// 
+			// OkButton
+			// 
+			OkButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+			OkButton.BackColor = Color.Black;
+			OkButton.FlatStyle = FlatStyle.Flat;
+			OkButton.Font = new Font("Segoe UI", 14F);
+			OkButton.Location = new Point(243, 331);
+			OkButton.Name = "OkButton";
+			OkButton.Size = new Size(53, 40);
+			OkButton.TabIndex = 13;
+			OkButton.Text = "OK";
+			OkButton.UseVisualStyleBackColor = false;
+			OkButton.Click += OkButton_Click;
 			// 
 			// MainForm
 			// 
 			AutoScaleDimensions = new SizeF(9F, 21F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = Color.FromArgb(40, 40, 40);
-			ClientSize = new Size(326, 391);
+			ClientSize = new Size(323, 391);
+			Controls.Add(OkButton);
+			Controls.Add(label1);
 			Controls.Add(tableLayoutPanel1);
+			Controls.Add(ApplyButton);
 			Font = new Font("Segoe UI", 12F);
 			ForeColor = Color.White;
+			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Icon = (Icon)resources.GetObject("$this.Icon");
-			Margin = new Padding(4, 4, 4, 4);
+			Margin = new Padding(4);
+			MinimumSize = new Size(339, 430);
 			Name = "MainForm";
 			Padding = new Padding(15, 17, 15, 17);
 			Text = "Settings";
+			Load += MainForm_Load;
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)MoveSpeed).EndInit();
+			((System.ComponentModel.ISupportInitialize)MoveInterval).EndInit();
+			((System.ComponentModel.ISupportInitialize)FramesPerSecond).EndInit();
 			ResumeLayout(false);
 		}
 
@@ -99,6 +247,16 @@
 
 		private Label label1;
 		private TableLayoutPanel tableLayoutPanel1;
-		private CheckBox checkBox1;
+		private CheckBox AlwaysOnTop;
+		private CheckBox FollowCursor;
+		private CheckBox EnableCursorChomping;
+		private Label label2;
+		private Label label3;
+		private NumericUpDown MoveSpeed;
+		private NumericUpDown MoveInterval;
+		private Label label4;
+		private NumericUpDown FramesPerSecond;
+		private Button ApplyButton;
+		private Button OkButton;
 	}
 }

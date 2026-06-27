@@ -37,10 +37,10 @@ internal class Shark : Visual<RasterGraphic>
 		var difference = cursor - Transform.Position;
 		float distance = MoveSpeed * deltaTime;
 
-		if (difference.Length() >= distance * 10)
+		if (difference.Length() >= distance + 20f)
 		{
 			Transformable.MoveTowards(this, cursor, distance);
-			Transformable.PointTowards(this, cursor);
+			Transformable.LookTowards(this, cursor);
 
 			Transform.FlipY = cursor.X < Transform.Position.X;
 
