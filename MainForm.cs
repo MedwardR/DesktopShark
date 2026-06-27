@@ -17,8 +17,6 @@ public partial class MainForm : Form
 		_application = app;
 		_world = app.World;
 		_fonts = fonts;
-
-		FramesPerSecond.Value = (decimal)_world.FramesPerSecond;
 	}
 
 	private void MainForm_Load(object sender, EventArgs e)
@@ -27,6 +25,20 @@ public partial class MainForm : Form
 		_fonts.Load("aquifer.ttf");
 
 		_fonts.ApplyTo(this);
+	}
+
+	private void MainForm_VisibleChanged(object sender, EventArgs e)
+	{
+		if (Visible)
+		{
+			var shark = _world.Singleton<Shark>();
+
+			FollowCursor.Checked = shark.FollowCursor;
+			MoveSpeed.Value = (decimal)shark.MoveSpeed;
+
+			AlwaysOnTop.Checked = _application.Viewport.Window.Topmost;
+			FramesPerSecond.Value = (decimal)_world.FramesPerSecond;
+		}
 	}
 
 	private void ApplyButton_Click(object sender, EventArgs e)
@@ -42,6 +54,12 @@ public partial class MainForm : Form
 
 	private void Save()
 	{
+		var shark = _world.Singleton<Shark>();
+
+		shark.FollowCursor = FollowCursor.Checked;
+		shark.MoveSpeed = (float)MoveSpeed.Value;
+
+		_application.Viewport.Window.Topmost = AlwaysOnTop.Checked;
 		_world.FramesPerSecond = (double)FramesPerSecond.Value;
 	}
 }

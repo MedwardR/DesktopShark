@@ -1,6 +1,7 @@
 ﻿using Ambient.Backend.Animation;
 using Ambient.Backend.Assets;
 using Ambient.Backend.Extensions;
+using Ambient.Backend.Geometry;
 using Ambient.Frontend.WindowsHybrid.Assets;
 using Ambient.Frontend.WindowsHybrid.Extensions;
 using Ambient.Frontend.WindowsHybrid.Graphics;
@@ -13,6 +14,8 @@ internal class Shark : Visual<RasterGraphic>
 	public Animator<Sprite> Animator { get; }
 
 	public float MoveSpeed { get; set; }
+
+	public bool FollowCursor { get; set; }
 
 	public Shark(AssetSystem assets)
 	{
@@ -32,20 +35,26 @@ internal class Shark : Visual<RasterGraphic>
 
 	public override void Update(float deltaTime)
 	{
-		var cursor = ScreenInformation.GetMousePosition();
-
-		var difference = cursor - Transform.Position;
-		float distance = MoveSpeed * deltaTime;
-
-		if (difference.Length() >= distance + 20f)
+		if (FollowCursor)
 		{
-			Transformable.MoveTowards(this, cursor, distance);
-			Transformable.LookTowards(this, cursor);
+			var cursor = ScreenInformation.GetMousePosition();
+			var difference = cursor - Transform.Position;
 
-			Transform.FlipY = cursor.X < Transform.Position.X;
+			if (difference.Length() >= 25f)
+			{
+				Transform.FlipY = cursor.X < Transform.Position.X;
 
-			Animator.Use("swim");
+				Transformable.LookTowards(this, cursor);
+				Transformable.MoveTowards(this, cursor, MoveSpeed * deltaTime);
+
+				Animator.Use("swim");
+			}
+			else Animator.Use("idle");
 		}
-		else Animator.Use("idle");
+		else
+		{
+			Transform.Rotation = Transform.FlipY ? Angle.Pi : Angle.Zero;
+			Animator.Use("idle");
+		}
 	}
 }

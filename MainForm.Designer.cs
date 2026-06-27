@@ -91,7 +91,6 @@
 			// 
 			// AlwaysOnTop
 			// 
-			AlwaysOnTop.AutoEllipsis = true;
 			AlwaysOnTop.AutoSize = true;
 			AlwaysOnTop.Font = new Font("Segoe UI", 12F);
 			AlwaysOnTop.Location = new Point(3, 3);
@@ -103,7 +102,6 @@
 			// 
 			// FollowCursor
 			// 
-			FollowCursor.AutoEllipsis = true;
 			FollowCursor.AutoSize = true;
 			FollowCursor.Font = new Font("Segoe UI", 12F);
 			FollowCursor.Location = new Point(137, 3);
@@ -115,7 +113,6 @@
 			// 
 			// EnableCursorChomping
 			// 
-			EnableCursorChomping.AutoEllipsis = true;
 			EnableCursorChomping.AutoSize = true;
 			tableLayoutPanel1.SetColumnSpan(EnableCursorChomping, 2);
 			EnableCursorChomping.Font = new Font("Segoe UI", 12F);
@@ -142,6 +139,7 @@
 			MoveSpeed.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
 			MoveSpeed.Font = new Font("Aquifer", 12F);
 			MoveSpeed.Location = new Point(137, 110);
+			MoveSpeed.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
 			MoveSpeed.Name = "MoveSpeed";
 			MoveSpeed.Size = new Size(129, 27);
 			MoveSpeed.TabIndex = 8;
@@ -235,6 +233,7 @@
 			Padding = new Padding(15, 17, 15, 17);
 			Text = "Settings";
 			Load += MainForm_Load;
+			VisibleChanged += MainForm_VisibleChanged;
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)MoveSpeed).EndInit();

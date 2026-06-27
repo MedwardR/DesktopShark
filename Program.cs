@@ -20,16 +20,14 @@ internal static class Program
 		var assets = new AssetSystem("Assets");
 		var fonts = new FontSystem(assets);
 
+		app.FormFactory = new(() => new MainForm(app, fonts));
+
 		var shark = new Shark(assets);
 		shark.Transform.Position = ScreenInformation.GetMousePosition();
+		shark.Graphics.Image.MouseRightButtonUp += (s, e) => app.Manage();
 
 		var monitor = FrameRateMonitor.StartNew(1.0);
 		monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
-
-		app.FormFactory = new(() =>
-		{
-			return new MainForm(app, fonts);
-		});
 
 		app.World.Nodes.Add(shark);
 		app.World.Nodes.Add(monitor);
