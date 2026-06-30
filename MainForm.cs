@@ -34,6 +34,7 @@ public partial class MainForm : Form
 			var shark = _world.Singleton<Shark>();
 
 			FollowCursor.Checked = shark.FollowCursor;
+			MoveInterval.Value = (decimal)shark.MoveInterval;
 			MoveSpeed.Value = (decimal)shark.MoveSpeed;
 
 			AlwaysOnTop.Checked = _application.Viewport.Window.Topmost;
@@ -57,6 +58,7 @@ public partial class MainForm : Form
 		var shark = _world.Singleton<Shark>();
 
 		shark.FollowCursor = FollowCursor.Checked;
+		shark.MoveInterval = (float)MoveInterval.Value;
 		shark.MoveSpeed = (float)MoveSpeed.Value;
 
 		_application.Viewport.Window.Topmost = AlwaysOnTop.Checked;

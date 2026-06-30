@@ -231,6 +231,7 @@
 			MinimumSize = new Size(339, 430);
 			Name = "MainForm";
 			Padding = new Padding(15, 17, 15, 17);
+			StartPosition = FormStartPosition.CenterScreen;
 			Text = "Settings";
 			Load += MainForm_Load;
 			VisibleChanged += MainForm_VisibleChanged;

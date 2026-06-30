@@ -1,6 +1,6 @@
 using System.Diagnostics;
-using Ambient.Backend.Assets;
-using Ambient.Backend.Diagnostics;
+using Ambient.Backend.Management;
+using Ambient.Backend.Timing;
 using Ambient.Frontend.WindowsHybrid.Application;
 using Ambient.Frontend.WindowsHybrid.Assets;
 using Ambient.Frontend.WindowsHybrid.Utilities;
@@ -26,7 +26,7 @@ internal static class Program
 		shark.Transform.Position = ScreenInformation.GetMousePosition();
 		shark.Graphics.Image.MouseRightButtonUp += (s, e) => app.Manage();
 
-		var monitor = FrameRateMonitor.StartNew(1.0);
+		var monitor = FrameRateMonitor.StartNew(1f);
 		monitor.Tick += (s, e) => Debug.Print($"FPS: {e.FramesPerSecond}");
 
 		app.World.Nodes.Add(shark);
