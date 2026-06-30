@@ -43,7 +43,7 @@ internal class Shark : Visual<RasterGraphic>
 		FollowCursor = false;
 
 		_moveCooldown = new(20f);
-		_destination = ScreenInformation.GetMousePosition();
+		_destination = Transform.Position;
 
 		Nodes.Add(Animator);
 		Nodes.Add(_moveCooldown);
@@ -51,11 +51,11 @@ internal class Shark : Visual<RasterGraphic>
 
 	public override void Update(float deltaTime)
 	{
-		UpdateDestination();
+		KeepDestinationUpdated();
 		MoveOrIdle(deltaTime);
 	}
 
-	private void UpdateDestination()
+	private void KeepDestinationUpdated()
 	{
 		if (FollowCursor)
 		{
@@ -79,7 +79,20 @@ internal class Shark : Visual<RasterGraphic>
 		else if (_moveCooldown.Tick())
 		{
 			_moveCooldown.Stop();
-			_destination = ScreenInformation.GetMousePosition();
+
+			var size = Graphics.Image.RenderSize;
+			var margin = new Size((int)size.Width, (int)size.Height);
+
+			var workingAreas = ScreenInformation.GetWorkingAreas();
+			int screenIndex = Random.Shared.Next(workingAreas.Length);
+			var area = workingAreas[screenIndex];
+
+			area.Inflate(margin / -2);
+
+			int x = Random.Shared.Next(area.Left, area.Right);
+			int y = Random.Shared.Next(area.Top, area.Bottom);
+
+			_destination = new(x, y);
 		}
 	}
 
