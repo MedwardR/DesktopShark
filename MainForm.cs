@@ -34,8 +34,10 @@ public partial class MainForm : Form
 			var shark = _world.Singleton<Shark>();
 
 			FollowCursor.Checked = shark.FollowCursor;
+			EnableCursorChomping.Checked = shark.AllowCursorChomp;
 			MoveInterval.Value = (decimal)shark.MoveInterval;
 			MoveSpeed.Value = (decimal)shark.MoveSpeed;
+			ChompChance.Value = (decimal)shark.CursorChompProbability * 100;
 
 			AlwaysOnTop.Checked = _application.Viewport.Window.Topmost;
 			FramesPerSecond.Value = (decimal)_world.FramesPerSecond;
@@ -58,8 +60,10 @@ public partial class MainForm : Form
 		var shark = _world.Singleton<Shark>();
 
 		shark.FollowCursor = FollowCursor.Checked;
+		shark.AllowCursorChomp = EnableCursorChomping.Checked;
 		shark.MoveInterval = (float)MoveInterval.Value;
 		shark.MoveSpeed = (float)MoveSpeed.Value;
+		shark.CursorChompProbability = (float)ChompChance.Value / 100f;
 
 		_application.Viewport.Window.Topmost = AlwaysOnTop.Checked;
 		_world.FramesPerSecond = (double)FramesPerSecond.Value;

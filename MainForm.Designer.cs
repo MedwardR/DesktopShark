@@ -31,6 +31,8 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			label1 = new Label();
 			tableLayoutPanel1 = new TableLayoutPanel();
+			ChompChance = new NumericUpDown();
+			label5 = new Label();
 			AlwaysOnTop = new CheckBox();
 			FollowCursor = new CheckBox();
 			EnableCursorChomping = new CheckBox();
@@ -43,6 +45,7 @@
 			ApplyButton = new Button();
 			OkButton = new Button();
 			tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)ChompChance).BeginInit();
 			((System.ComponentModel.ISupportInitialize)MoveSpeed).BeginInit();
 			((System.ComponentModel.ISupportInitialize)MoveInterval).BeginInit();
 			((System.ComponentModel.ISupportInitialize)FramesPerSecond).BeginInit();
@@ -67,6 +70,8 @@
 			tableLayoutPanel1.ColumnCount = 2;
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 			tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+			tableLayoutPanel1.Controls.Add(ChompChance, 1, 5);
+			tableLayoutPanel1.Controls.Add(label5, 1, 4);
 			tableLayoutPanel1.Controls.Add(AlwaysOnTop, 0, 0);
 			tableLayoutPanel1.Controls.Add(FollowCursor, 1, 0);
 			tableLayoutPanel1.Controls.Add(EnableCursorChomping, 0, 1);
@@ -88,6 +93,28 @@
 			tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
 			tableLayoutPanel1.Size = new Size(269, 222);
 			tableLayoutPanel1.TabIndex = 3;
+			// 
+			// ChompChance
+			// 
+			ChompChance.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+			ChompChance.Font = new Font("Aquifer", 12F);
+			ChompChance.Location = new Point(137, 177);
+			ChompChance.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			ChompChance.Name = "ChompChance";
+			ChompChance.Size = new Size(129, 27);
+			ChompChance.TabIndex = 13;
+			ChompChance.Value = new decimal(new int[] { 1, 0, 0, 0 });
+			// 
+			// label5
+			// 
+			label5.AutoSize = true;
+			label5.Font = new Font("Segoe UI", 12F);
+			label5.Location = new Point(137, 150);
+			label5.Margin = new Padding(3);
+			label5.Name = "label5";
+			label5.Size = new Size(113, 21);
+			label5.TabIndex = 12;
+			label5.Text = "Chomp chance";
 			// 
 			// AlwaysOnTop
 			// 
@@ -237,6 +264,7 @@
 			VisibleChanged += MainForm_VisibleChanged;
 			tableLayoutPanel1.ResumeLayout(false);
 			tableLayoutPanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)ChompChance).EndInit();
 			((System.ComponentModel.ISupportInitialize)MoveSpeed).EndInit();
 			((System.ComponentModel.ISupportInitialize)MoveInterval).EndInit();
 			((System.ComponentModel.ISupportInitialize)FramesPerSecond).EndInit();
@@ -258,5 +286,7 @@
 		private NumericUpDown FramesPerSecond;
 		private Button ApplyButton;
 		private Button OkButton;
+		private Label label5;
+		private NumericUpDown ChompChance;
 	}
 }
