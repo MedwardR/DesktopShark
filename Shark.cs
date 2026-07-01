@@ -7,13 +7,16 @@ using Ambient.Backend.Timing;
 using Ambient.Frontend.WindowsHybrid.Assets;
 using Ambient.Frontend.WindowsHybrid.Extensions;
 using Ambient.Frontend.WindowsHybrid.Graphics;
+using Ambient.Frontend.WindowsHybrid.Input;
 using Ambient.Frontend.WindowsHybrid.Utilities;
 
 namespace DesktopShark;
 
-internal class Shark : Visual<RasterGraphic>
+internal class Shark : Actor<RasterGraphic>
 {
+	private readonly MouseDragController _dragController;
 	private readonly Cooldown _moveCooldown;
+
 	private Vector2 _destination;
 
 	public Animator<Sprite> Animator { get; }
@@ -29,12 +32,14 @@ internal class Shark : Visual<RasterGraphic>
 
 	public Shark(AssetSystem assets)
 	{
-		var template = new SpriteAnimationTemplate(256, 200, 0.2f);
+		var slow = new SpriteAnimationTemplate(256, 200, 0.200f);
+		var fast = new SpriteAnimationTemplate(256, 200, 0.050f);
 
 		Animator = new()
 		{
-			{ "idle", assets.Load<Sprite>("shark_idle.png").Animate(template) },
-			{ "swim", assets.Load<Sprite>("shark_swim.png").Animate(template) },
+			{ "idle", assets.Load<Sprite>("shark_idle.png").Animate(slow) },
+			{ "swim", assets.Load<Sprite>("shark_swim.png").Animate(slow) },
+			{ "drag", assets.Load<Sprite>("shark_drag.png").Animate(fast) },
 		};
 		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
@@ -42,8 +47,12 @@ internal class Shark : Visual<RasterGraphic>
 		MoveSpeed = 100f;
 		FollowCursor = false;
 
+		_dragController = new(this);
+		_dragController.DraggingEnded += (s, e) => _destination = Transform.Position;
+		_dragController.Enable();
+
 		_moveCooldown = new(20f);
-		_destination = Transform.Position;
+		_destination = ScreenInformation.GetMousePosition();
 
 		Nodes.Add(Animator);
 		Nodes.Add(_moveCooldown);
@@ -51,8 +60,19 @@ internal class Shark : Visual<RasterGraphic>
 
 	public override void Update(float deltaTime)
 	{
-		KeepDestinationUpdated();
-		MoveOrIdle(deltaTime);
+		if (_dragController.IsDragging)
+		{
+			if (_moveCooldown.IsRunning)
+			{
+				_moveCooldown.Stop();
+			}
+			Animator.Use("drag");
+		}
+		else
+		{
+			KeepDestinationUpdated();
+			MoveOrIdle(deltaTime);
+		}
 	}
 
 	private void KeepDestinationUpdated()
@@ -80,14 +100,15 @@ internal class Shark : Visual<RasterGraphic>
 		{
 			_moveCooldown.Stop();
 
-			var size = Graphics.Image.RenderSize;
-			var margin = new Size((int)size.Width, (int)size.Height);
+			int width = (int)Graphics.Image.RenderSize.Width;
+			int height = (int)Graphics.Image.RenderSize.Height;
+			var margin = new Size(width, height) / 2;
 
 			var workingAreas = ScreenInformation.GetWorkingAreas();
 			int screenIndex = Random.Shared.Next(workingAreas.Length);
 			var area = workingAreas[screenIndex];
 
-			area.Inflate(margin / -2);
+			area.Inflate(margin * -1);
 
 			int x = Random.Shared.Next(area.Left, area.Right);
 			int y = Random.Shared.Next(area.Top, area.Bottom);
