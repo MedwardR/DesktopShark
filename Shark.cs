@@ -2,19 +2,22 @@
 using Ambient.Backend.Animation;
 using Ambient.Backend.Extensions;
 using Ambient.Backend.Geometry;
+using Ambient.Backend.IO;
 using Ambient.Backend.Kernel;
-using Ambient.Backend.Management;
 using Ambient.Backend.Timing;
-using Ambient.Frontend.WindowsHybrid.Assets;
+using Ambient.Frontend.WindowsHybrid.Audio;
 using Ambient.Frontend.WindowsHybrid.Extensions;
 using Ambient.Frontend.WindowsHybrid.Graphics;
 using Ambient.Frontend.WindowsHybrid.Input;
+using Ambient.Frontend.WindowsHybrid.Sprites;
 using Ambient.Frontend.WindowsHybrid.Utilities;
 
 namespace DesktopShark;
 
 internal class Shark : Actor<RasterGraphic>
 {
+	private const float TARGET_PROXIMITY = 25f;
+
 	private readonly MouseDragController _dragController;
 	private readonly TimeInterval _moveInterval;
 
@@ -22,6 +25,7 @@ internal class Shark : Actor<RasterGraphic>
 	private bool _chasing;
 
 	public Animator<Sprite> Animator { get; }
+	public Boombox Boombox { get; }
 
 	public bool FollowCursor { get; set; }
 	public bool AllowCursorChomp { get; set; }
@@ -58,6 +62,11 @@ internal class Shark : Actor<RasterGraphic>
 		Animator.FrameChanged += (s, e) => Graphics.Use(e.Frame.Value);
 		Animator.Start();
 
+		Boombox = new()
+		{
+			{ "chase", assets.Resolve("chase_music.m4a") },
+			{ "chomp", assets.Resolve("shark_chomp.wav") },
+		};
 		FollowCursor = false;
 		AllowCursorChomp = false;
 		MoveSpeed = 100f;
@@ -66,9 +75,10 @@ internal class Shark : Actor<RasterGraphic>
 
 	protected override IEnumerable<Node> Compose()
 	{
-		yield return Animator;
 		yield return _dragController;
 		yield return _moveInterval;
+		yield return Animator;
+		yield return Boombox;
 	}
 
 	protected override void Update(float deltaTime)
@@ -127,6 +137,7 @@ internal class Shark : Actor<RasterGraphic>
 			if (_chasing)
 			{
 				Animator.Use("chase");
+				Boombox.Play("chase", true);
 			}
 			else Animator.Use("swim");
 		}
@@ -142,6 +153,7 @@ internal class Shark : Actor<RasterGraphic>
 			}
 			if (_chasing)
 			{
+				Boombox.Play("chomp", false);
 				_chasing = false;
 			}
 			Animator.Use("idle");
@@ -150,9 +162,23 @@ internal class Shark : Actor<RasterGraphic>
 
 	private void PickNewDestination()
 	{
-		float r = Random.Shared.NextSingle();
+		if (AllowCursorChomp)
+		{
+			var cursor = ScreenInformation.GetMousePosition();
+			var distanceToCursor = (cursor - Transform.Position).Length();
 
-		if (r > CursorChompProbability)
+			float r = Random.Shared.NextSingle();
+
+			if (r <= CursorChompProbability)
+			{
+				if (distanceToCursor > TARGET_PROXIMITY)
+				{
+					_chasing = true;
+					_destination = cursor;
+				}
+			}
+		}
+		if (!_chasing)
 		{
 			int width = (int)Graphics.Image.RenderSize.Width;
 			int height = (int)Graphics.Image.RenderSize.Height;
@@ -168,11 +194,6 @@ internal class Shark : Actor<RasterGraphic>
 			int y = Random.Shared.Next(area.Top, area.Bottom);
 
 			_destination = new(x, y);
-		}
-		else
-		{
-			_chasing = true;
-			_destination = ScreenInformation.GetMousePosition();
 		}
 		_moveInterval.Stop();
 	}

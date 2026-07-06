@@ -1,6 +1,5 @@
 ﻿using Ambient.Backend.Kernel;
 using Ambient.Frontend.WindowsHybrid.Application;
-using Ambient.Frontend.WindowsHybrid.Assets;
 
 namespace DesktopShark;
 
